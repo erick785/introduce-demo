@@ -16,6 +16,8 @@ describe("Introduce Test", function () {
     const introduce = await ethers.getContractFactory("Introduce");
     const introduceContract = await introduce.deploy();
 
+    await introduceContract.setSwap(A.address);
+    
     //call contract
     await introduceContract["addIntroducer(address)"](A.address);
 

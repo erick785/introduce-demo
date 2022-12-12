@@ -8,7 +8,7 @@
     "build": "npx hardhat compile",
     "test": "npx hardhat test",
     "clean": "npx hardhat clean",
-    "deploy": "npx hardhat --network test run scripts/deploy.js",
+    "deploy": "npx hardhat --network env run scripts/deploy.ts",
     "size": "npx hardhat size-contracts",
     "docgen": "npx hardhat docgen",
     "fmt": "./node_modules/.bin/prettier --write contracts/**/*.sol",

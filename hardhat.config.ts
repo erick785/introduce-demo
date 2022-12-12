@@ -22,6 +22,7 @@ const config: HardhatUserConfig = {
   solidity: "0.8.17",
   networks: {
     env: {
+      timeout: 400000,
       url: process.env.URL || "",
       accounts: process.env.PRIVATE_KEY !== undefined ? process.env.PRIVATE_KEY.split(",") : [],
     },

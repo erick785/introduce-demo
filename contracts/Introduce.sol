@@ -5,6 +5,17 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract Introduce is Ownable {
+    address public swap;
+
+    function setSwap(address _swap) public onlyOwner {
+        swap = _swap;
+    }
+
+    modifier onlySwap() {
+        require(msg.sender == swap, "Introduce: caller is not the swap");
+        _;
+    }
+
     // 推介者
     address[] public introducers;
     mapping(address => uint256) public indexes;
@@ -12,7 +23,7 @@ contract Introduce is Ownable {
     // 被推介者 => 推介者Index
     mapping(address => uint256) public introducerIndexes;
 
-    function addIntroducer(address introducer) public returns (bool) {
+    function addIntroducer(address introducer) public onlySwap returns (bool) {
         return _addIntroducer(introducer);
     }
 
@@ -24,7 +35,7 @@ contract Introduce is Ownable {
     // C = 3
     // introducerIndexes[C] = 2
 
-    function addIntroducer(uint256 index, address introduce) public {
+    function addIntroducer(uint256 index, address introduce) public onlySwap {
         // 已经注册过的不允许再注册
         if (_addIntroducer(introduce)) {
             introducerIndexes[introduce] = index;
@@ -34,7 +45,7 @@ contract Introduce is Ownable {
     // 获取第一级推介者和第二级推介者
     // A = > B => C
     function getFirstAndSecondIntroducer(address introducer) public view returns (address, address) {
-        // 未注册的人没有推介者 
+        // 未注册的人没有推介者
         if (indexes[introducer] == 0) {
             return (address(0), address(0));
         }
