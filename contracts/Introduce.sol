@@ -38,6 +38,10 @@ contract Introduce is Ownable {
     function addIntroducer(uint256 index, address introduce) public onlySwap {
         // 已经注册过的不允许再注册
         if (_addIntroducer(introduce)) {
+            // index 大于 introducers.length 时，index = introducers.length
+            if (index > introducers.length) {
+                index = introducers.length;
+            }
             introducerIndexes[introduce] = index;
         }
     }
