@@ -2,20 +2,8 @@
 
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract Introduce is Ownable {
-    address public swap;
-
-    function setSwap(address _swap) public onlyOwner {
-        swap = _swap;
-    }
-
-    modifier onlySwap() {
-        require(msg.sender == swap, "Introduce: caller is not the swap");
-        _;
-    }
-
+contract Introduce {
     // 推介者
     address[] public introducers;
     mapping(address => uint256) public indexes;
@@ -23,7 +11,7 @@ contract Introduce is Ownable {
     // 被推介者 => 推介者Index
     mapping(address => uint256) public introducerIndexes;
 
-    function addIntroducer(address introducer) public onlySwap returns (bool) {
+    function addIntroducer(address introducer) public returns (bool) {
         return _addIntroducer(introducer);
     }
 
@@ -35,13 +23,11 @@ contract Introduce is Ownable {
     // C = 3
     // introducerIndexes[C] = 2
 
-    function addIntroducer(uint256 index, address introduce) public onlySwap {
+    function addIntroducer(uint256 index, address introduce) public {
         // 已经注册过的不允许再注册
         if (_addIntroducer(introduce)) {
             // index 大于 introducers.length 时，index = introducers.length
-            if (index > introducers.length) {
-                index = introducers.length;
-            }
+            require(index <= introducers.length, "Introduce: index out of range");
             introducerIndexes[introduce] = index;
         }
     }

@@ -32,8 +32,6 @@ async function main() {
 
   await (await swapContract.setIntroduce(introduceContract.address)).wait();
 
-  await (await introduceContract.setSwap(swapContract.address)).wait();
-
 }
 
 // We recommend this pattern to be able to use async/await everywhere

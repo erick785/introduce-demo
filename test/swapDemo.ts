@@ -24,9 +24,6 @@ describe("Swap demo Test", function () {
 
     await swapContract.setIntroduce(introduceContract.address);
 
-    await introduceContract.setSwap(swapContract.address);
-
-
     //call contract
     await swapContract["swap(address,uint256)"](A.address, 100000);
 
