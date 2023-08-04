@@ -22,7 +22,6 @@ contract Introduce {
     // index = 2, introduce = C
     // C = 3
     // introducerIndexes[C] = 2
-
     function addIntroducer(uint256 index, address introduce) public {
         // 已经注册过的不允许再注册
         if (_addIntroducer(introduce)) {

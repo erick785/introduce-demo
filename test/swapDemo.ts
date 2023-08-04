@@ -21,19 +21,20 @@ describe("Swap demo Test", function () {
     const swap = await ethers.getContractFactory("SwapDemo");
     const swapContract = await swap.deploy();
 
-
+    // 1. swap 入口合约设置邀请合约地址
     await swapContract.setIntroduce(introduceContract.address);
 
     //call contract
+    // 2. A 用户注册为邀请人，并swap交易
     await swapContract["swap(address,uint256)"](A.address, 100000);
 
+    // 3. 获取A用户的邀请人地址index
     const AIndex = await introduceContract.indexes(A.address);
 
     expect(AIndex).to.equal(1);
     expect(await swapContract.profitBalances(A.address)).to.equal(0);
 
-    // A introduce B
-
+    //4. A introduce B ， A用户邀请B用户 ，B用户调用swap交易，参数为A用户的index，B用户的地址
     await swapContract["swap(uint256,address,uint256)"](AIndex, B.address, 100000);
 
     const BIndex = await introduceContract.indexes(B.address);
