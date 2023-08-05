@@ -26,7 +26,7 @@ contract SwapDemo is Ownable {
     function setIntroduce(address _introduce) public onlyOwner {
         introduce = Introduce(_introduce);
     }
-
+    // A 用户自己注册为邀请人，并swap
     function swap(address introducer, uint256 amonut) public {
         if (introduce.indexes(introducer) == 0) {
             introduce.addIntroducer(introducer);
@@ -37,11 +37,11 @@ contract SwapDemo is Ownable {
         calculateDividends(introducer, amonut);
     }
 
+    // B 用户被 A 邀请，并swap,为A用户的index，B用户的地址
     function swap(uint256 index, address introducer, uint256 amonut) public {
         if (introduce.indexes(introducer) == 0) {
             introduce.addIntroducer(index, introducer);
         }
-
         // todo swap
 
         calculateDividends(introducer, amonut);
